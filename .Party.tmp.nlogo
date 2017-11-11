@@ -3,6 +3,7 @@ globals [
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
   max-ticks
+  tolerance
 ]
 
 turtles-own [
@@ -27,7 +28,7 @@ to setup
   ask turtles [ spread-out-vertically ]
   reset-ticks
   ;; set max-ticks 49.5 * tolerance + 25
-
+  set tolerance logistic 0
 end
 
 to go
@@ -44,12 +45,13 @@ to go
     spread-out-vertically
   ]
   set ticks-count ticks-count + 1
-  let happyTurtles amount-happiness
-  if (ticks-count > max-ticks) [
-    set ticks-count 0
-    set tolerance tolerance * 1.05
-    set max-ticks 49.5 * tolerance + 25
-  ]
+  ;;let happyTurtles amount-happiness
+  ;;if (ticks-count > max-ticks) [
+  ;;  set ticks-count 0
+  ;;  set tolerance tolerance * 1.05
+  ;;  set max-ticks 49.5 * tolerance + 25
+  ;;]
+  set tolerance logistic ticks-count
   tick
 end
 
@@ -245,21 +247,6 @@ NIL
 0
 
 SLIDER
-25
-115
-244
-148
-tolerance
-tolerance
-0.0
-99.0
-65.02412916709311
-1.0
-1
-%
-HORIZONTAL
-
-SLIDER
 60
 3
 211
@@ -301,7 +288,7 @@ num-groups
 num-groups
 5
 20
-7.0
+6.0
 1
 1
 NIL
@@ -334,9 +321,9 @@ types
 HORIZONTAL
 
 MONITOR
-1120
+1135
 85
-1182
+1197
 130
 NIL
 tolerance
