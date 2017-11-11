@@ -1,6 +1,7 @@
 globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
+  ticks-count    ;; ticks amount since last gruops expansion
 ]
 
 turtles-own [
@@ -39,7 +40,19 @@ to go
     set my-group-site patch-here
     spread-out-vertically
   ]
+  set ticks-count ticks-count + 1
+  let happyTurtles amount-happiness
+  if (ticks-count > 2000) [
+    set ticks-count 0
+    set tolerance tolerance * 1.05
+  ]
   tick
+end
+
+to-report amount-happiness
+  let total count turtles
+  let happis count turtles with [happy?]
+  report (happis / total)
 end
 
 to update-happiness  ;; turtle procedure
@@ -231,7 +244,7 @@ tolerance
 tolerance
 0.0
 99.0
-80.0
+80.27179850027586
 1.0
 1
 %
@@ -297,7 +310,7 @@ num-groups
 num-groups
 5
 20
-6.0
+7.0
 1
 1
 NIL
@@ -339,6 +352,35 @@ typesTotal
 1
 types
 HORIZONTAL
+
+MONITOR
+1120
+85
+1182
+130
+NIL
+tolerance
+17
+1
+11
+
+PLOT
+1160
+190
+1360
+340
+Tolerance
+clock
+NIL
+0.0
+10.0
+0.0
+100.0
+true
+false
+"set-plot-y-range 0 100" ""
+PENS
+"Tolerance" 1.0 0 -16777216 true "" "plot tolerance"
 
 @#$#@#$#@
 ## WHAT IS IT?
