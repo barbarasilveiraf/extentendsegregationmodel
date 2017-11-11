@@ -2,7 +2,6 @@ globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
-  max-ticks
 ]
 
 turtles-own [
@@ -26,7 +25,6 @@ to setup
   update-labels
   ask turtles [ spread-out-vertically ]
   reset-ticks
-  ;; set max-ticks 49.5 * tolerance + 25
 
 end
 
@@ -44,24 +42,11 @@ to go
     spread-out-vertically
   ]
   set ticks-count ticks-count + 1
-  let happyTurtles amount-happiness
-  if (ticks-count > max-ticks) [
+  if (ticks-count > ticks-to-update-tolerance) [
     set ticks-count 0
     set tolerance tolerance * 1.05
-    set max-ticks 49.5 * tolerance + 25
   ]
   tick
-end
-
-to-report logistic [x]
-  let l 1 / (1 + exp(-0.00005 * (x - 40000) ) )
-  report l * 100
-end
-
-to-report amount-happiness
-  let total count turtles
-  let happis count turtles with [happy?]
-  report (happis / total)
 end
 
 to update-happiness  ;; turtle procedure
@@ -253,7 +238,7 @@ tolerance
 tolerance
 0.0
 99.0
-65.02412916709311
+13.0
 1.0
 1
 %
@@ -301,7 +286,7 @@ num-groups
 num-groups
 5
 20
-7.0
+6.0
 1
 1
 NIL
@@ -367,7 +352,7 @@ PLOT
 340
 1325
 490
-Max Ticks
+Ticks to update tolerance
 ticks
 NIL
 0.0
@@ -378,18 +363,33 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot max-ticks"
+"default" 1.0 0 -16777216 true "" "plot ticks-to-update-tolerance"
 
 MONITOR
 1215
 85
-1277
+1365
 130
 NIL
-max-ticks
+ticks-to-update-tolerance
 17
 1
 11
+
+SLIDER
+35
+400
+232
+433
+ticks-to-update-tolerance
+ticks-to-update-tolerance
+50
+3000
+570.0
+100
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
