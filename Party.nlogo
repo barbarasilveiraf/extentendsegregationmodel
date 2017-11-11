@@ -1,6 +1,8 @@
 globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
+  ticks-count    ;; ticks amount since last gruops expansion
+  happy-mean     ;; mean of happiness since last groups expansion
 ]
 
 turtles-own [
@@ -23,6 +25,8 @@ to setup
   count-boring-groups
   update-labels
   ask turtles [ spread-out-vertically ]
+  set ticks-count 0
+  set happy-mean 0
   reset-ticks
 end
 
@@ -39,7 +43,23 @@ to go
     set my-group-site patch-here
     spread-out-vertically
   ]
+
+  let mh mean-happiness
+  set happy-mean ((happy-mean + mh) / 2)
+  set ticks-count ticks-count + 1
+  if (ticks-count > 4000) and happy-mean < 0.5 [
+    set ticks-count 0
+    set happy-mean 0
+    set num-groups num-groups + 1
+    set group-sites patches with [group-site?]
+  ]
   tick
+end
+
+to-report mean-happiness
+  let total count turtles
+  let happis count turtles with [happy?]
+  report (happis / total)
 end
 
 to update-happiness  ;; turtle procedure
@@ -189,9 +209,9 @@ NIL
 1
 
 BUTTON
-176
+180
 75
-244
+248
 108
 go
 go
@@ -206,9 +226,9 @@ NIL
 0
 
 BUTTON
-94
+98
 75
-175
+179
 108
 go once
 go
@@ -231,7 +251,7 @@ tolerance
 tolerance
 0.0
 99.0
-80.0
+40.0
 1.0
 1
 %
@@ -246,7 +266,7 @@ number
 number
 0
 300
-70.0
+60.0
 1
 1
 NIL
@@ -289,15 +309,15 @@ PENS
 "Single Sex" 1.0 0 -2674135 true "" "plot boring-groups"
 
 SLIDER
-60
+64
 37
-211
+215
 70
 num-groups
 num-groups
 5
 20
-6.0
+8.0
 1
 1
 NIL
@@ -334,11 +354,55 @@ typesTotal
 typesTotal
 2
 10
-9.0
+6.0
 1
 1
 types
 HORIZONTAL
+
+MONITOR
+1115
+85
+1215
+130
+NIL
+mean-happiness
+17
+1
+11
+
+MONITOR
+1220
+85
+1292
+130
+NIL
+ticks-count
+17
+1
+11
+
+MONITOR
+1290
+85
+1372
+130
+NIL
+happy-mean
+17
+1
+11
+
+MONITOR
+1115
+140
+1215
+185
+NIL
+num-groups
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -719,7 +783,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.2
+NetLogo 6.0.1
 @#$#@#$#@
 setup
 repeat 20 [ go ]
