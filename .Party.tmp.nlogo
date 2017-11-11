@@ -26,7 +26,7 @@ to setup
   update-labels
   ask turtles [ spread-out-vertically ]
   reset-ticks
-  set max-ticks 49.5 * tolerance + 25
+  ;; set max-ticks 49.5 * tolerance + 25
 
 end
 
@@ -51,6 +51,11 @@ to go
     set max-ticks 49.5 * tolerance + 25
   ]
   tick
+end
+
+to-report logistic [x]
+  let l 1 / (1 + exp(-0.00005 * (x - 40000) ) )
+  report l * 100
 end
 
 to-report amount-happiness
@@ -248,7 +253,7 @@ tolerance
 tolerance
 0.0
 99.0
-70.24025018899881
+65.02412916709311
 1.0
 1
 %
@@ -296,7 +301,7 @@ num-groups
 num-groups
 5
 20
-6.0
+7.0
 1
 1
 NIL
