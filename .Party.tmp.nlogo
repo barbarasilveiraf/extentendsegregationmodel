@@ -231,7 +231,7 @@ tolerance
 tolerance
 0.0
 99.0
-78.0
+74.0
 1.0
 1
 %
@@ -270,6 +270,24 @@ false
 PENS
 "Happy" 1.0 0 -10899396 true "" "plot count turtles with [happy?]"
 
+PLOT
+10
+428
+260
+598
+Single Sex Groups
+clock
+NIL
+0.0
+10.0
+0.0
+12.0
+true
+false
+"" ""
+PENS
+"Single Sex" 1.0 0 -2674135 true "" "plot boring-groups"
+
 SLIDER
 60
 37
@@ -279,7 +297,7 @@ num-groups
 num-groups
 5
 20
-5.0
+7.0
 1
 1
 NIL
@@ -292,6 +310,17 @@ MONITOR
 198
 number happy
 count turtles with [happy?]
+3
+1
+11
+
+MONITOR
+70
+378
+195
+423
+single sex groups
+boring-groups
 3
 1
 11
