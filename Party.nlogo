@@ -44,7 +44,8 @@ to go
   set ticks-count ticks-count + 1
   if (ticks-count > ticks-to-update-tolerance) [
     set ticks-count 0
-    set tolerance tolerance * 1.05
+    set tolerance tolerance * (1 + (increase-tolerance-percent / 100))
+    ;;set tolerance tolerance * 1.05
   ]
   tick
 end
@@ -238,7 +239,7 @@ tolerance
 tolerance
 0.0
 99.0
-13.0
+63.854772899089866
 1.0
 1
 %
@@ -286,7 +287,7 @@ num-groups
 num-groups
 5
 20
-6.0
+7.0
 1
 1
 NIL
@@ -312,17 +313,17 @@ typesTotal
 typesTotal
 2
 10
-9.0
+8.0
 1
 1
 types
 HORIZONTAL
 
 MONITOR
-1180
-135
-1242
-180
+1170
+120
+1232
+165
 NIL
 tolerance
 17
@@ -330,10 +331,10 @@ tolerance
 11
 
 PLOT
-1125
-200
-1325
-350
+1120
+185
+1320
+335
 Tolerance
 clock
 NIL
@@ -348,10 +349,10 @@ PENS
 "Tolerance" 1.0 0 -16777216 true "" "plot tolerance"
 
 PLOT
-1130
-365
-1330
-515
+1120
+350
+1320
+500
 Ticks to update tolerance
 ticks
 NIL
@@ -363,19 +364,34 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot ticks-to-update-tolerance"
+"default" 1.0 0 -16777216 true "" "plot ticks"
 
 SLIDER
 1115
-80
+75
 1312
-113
+108
 ticks-to-update-tolerance
 ticks-to-update-tolerance
 50
 3000
-570.0
+150.0
 100
+1
+NIL
+HORIZONTAL
+
+SLIDER
+45
+420
+237
+453
+increase-tolerance-percent
+increase-tolerance-percent
+5
+80
+5.0
+1
 1
 NIL
 HORIZONTAL
