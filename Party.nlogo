@@ -1,6 +1,7 @@
 globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
+  porcentHappyTurtle
 ]
 
 turtles-own [
@@ -27,11 +28,20 @@ to setup
 end
 
 to go
-  if all? turtles [happy?]
+  tick
+  ;ask turtles[
+  set porcentHappyTurtle percent-turtles-happy
+  ;]
+  if (porcentHappyTurtle >= happy-percent-stop)
+  ;if all? turtles [happy?]
     [ stop ]  ;; stop the simulation if everyone is happy
+
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
+
+ ; ask turtles [percent-turtles-happy]
+
   find-new-groups
   update-labels
   count-boring-groups
@@ -39,7 +49,15 @@ to go
     set my-group-site patch-here
     spread-out-vertically
   ]
-  tick
+
+end
+
+to-report percent-turtles-happy
+  let total count turtles-here
+  let qtdeHappy count turtles with [happy?]
+  report ((100 * qtdeHappy) / total)
+  ;let porcentHappyTurtle ((100 * qtdeHappy) / total)
+  ;if (porcentHappyTurtle >= happy-percent-stop)  [ stop ]
 end
 
 to update-happiness  ;; turtle procedure
@@ -231,7 +249,7 @@ tolerance
 tolerance
 0.0
 99.0
-78.0
+0.0
 1.0
 1
 %
@@ -246,7 +264,7 @@ number
 number
 0
 300
-70.0
+0.0
 1
 1
 NIL
@@ -279,7 +297,7 @@ num-groups
 num-groups
 5
 20
-5.0
+0.0
 1
 1
 NIL
@@ -305,10 +323,25 @@ typesTotal
 typesTotal
 2
 10
-8.0
+0.0
 1
 1
 types
+HORIZONTAL
+
+SLIDER
+1120
+130
+1292
+163
+happy-percent-stop
+happy-percent-stop
+10
+100
+0.0
+5
+1
+NIL
 HORIZONTAL
 
 @#$#@#$#@
