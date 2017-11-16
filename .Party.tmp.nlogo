@@ -250,7 +250,7 @@ tolerance
 tolerance
 0.0
 99.0
-93.0
+73.22482090623744
 1.0
 1
 %
@@ -331,9 +331,9 @@ types
 HORIZONTAL
 
 MONITOR
-1110
+1120
 85
-1172
+1182
 130
 NIL
 tolerance
@@ -342,9 +342,9 @@ tolerance
 11
 
 PLOT
-1115
+1125
 150
-1315
+1325
 300
 Tolerance
 clock
@@ -360,10 +360,10 @@ PENS
 "Tolerance" 1.0 0 -16777216 true "" "plot tolerance"
 
 PLOT
-1120
-320
-1320
-470
+1125
+340
+1325
+490
 Ticks to update tolerance
 clock
 NIL
@@ -378,9 +378,9 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot ticks-to-update-tolerance"
 
 MONITOR
-1180
+1215
 85
-1315
+1350
 130
 NIL
 ticks-to-update-tolerance
