@@ -55,7 +55,7 @@ end
 
 to-report logistic [x]
  ; let l 1 / (1 + exp(-0.00005 * (x - 40000) ) )
-  let l 1 / (1 + exp(-0.00005 * (x - 50000) ) )
+  let l 1 / (2 + exp(-0.00005 * (x - 50000) ) ) ;; parece quase certo... mas fujo da formula q é 1 +
   ;let l 1 / (1 + exp(-0.00555 * (x - 40000) ) )
   ;let l 1 / (1 + 11 * (exp(- 0.0009 * (x - 1000 )) ))
   report l * 100
