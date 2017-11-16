@@ -239,7 +239,7 @@ tolerance
 tolerance
 0.0
 99.0
-63.854772899089866
+60.81406942770463
 1.0
 1
 %
@@ -352,7 +352,7 @@ PLOT
 1120
 350
 1320
-500
+515
 Ticks to update tolerance
 ticks
 NIL
@@ -364,7 +364,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot ticks"
+"default" 1.0 0 -16777216 true "" "plot ticks-to-update-tolerance"
 
 SLIDER
 1115
