@@ -2,7 +2,6 @@ globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
-  max-ticks
   tolerance
 ]
 
@@ -27,7 +26,6 @@ to setup
   update-labels
   ask turtles [ spread-out-vertically ]
   reset-ticks
-  ;; set max-ticks 49.5 * tolerance + 25
   set tolerance logistic 0
 end
 
@@ -56,7 +54,9 @@ to go
 end
 
 to-report logistic [x]
-  let l 1 / (1 + exp(-0.00005 * (x - 40000) ) )
+  let l 1 / (1 + exp(-0.00005 * (x - 0000) ) )
+  ;let l 1 / (1 + exp(-0.00555 * (x - 40000) ) )
+  ;let l 1 / (1 + 11 * (exp(- 0.0009 * (x - 1000 )) ))
   report l * 100
 end
 
@@ -263,9 +263,9 @@ HORIZONTAL
 
 PLOT
 10
-203
+175
 260
-368
+340
 Number Happy
 clock
 NIL
@@ -296,9 +296,9 @@ HORIZONTAL
 
 MONITOR
 75
-153
+115
 200
-198
+160
 number happy
 count turtles with [happy?]
 3
@@ -348,35 +348,6 @@ false
 "set-plot-y-range 0 100" ""
 PENS
 "Tolerance" 1.0 0 -16777216 true "" "plot tolerance"
-
-PLOT
-1125
-340
-1325
-490
-Max Ticks
-ticks
-NIL
-0.0
-10.0
-0.0
-10.0
-true
-false
-"" ""
-PENS
-"default" 1.0 0 -16777216 true "" "plot max-ticks"
-
-MONITOR
-1215
-85
-1277
-130
-NIL
-max-ticks
-17
-1
-11
 
 @#$#@#$#@
 ## WHAT IS IT?

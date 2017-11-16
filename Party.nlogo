@@ -2,7 +2,6 @@ globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
-  max-ticks
   tolerance
 ]
 
@@ -27,7 +26,6 @@ to setup
   update-labels
   ask turtles [ spread-out-vertically ]
   reset-ticks
-  ;; set max-ticks 49.5 * tolerance + 25
   set tolerance logistic 0
 end
 
@@ -56,7 +54,10 @@ to go
 end
 
 to-report logistic [x]
-  let l 1 / (1 + exp(-0.00005 * (x - 40000) ) )
+ ; let l 1 / (1 + exp(-0.00005 * (x - 40000) ) )
+  let l 1 / (1 + exp(-0.00005 * (x - 50000) ) )
+  ;let l 1 / (1 + exp(-0.00555 * (x - 40000) ) )
+  ;let l 1 / (1 + 11 * (exp(- 0.0009 * (x - 1000 )) ))
   report l * 100
 end
 
