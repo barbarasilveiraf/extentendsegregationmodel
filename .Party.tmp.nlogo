@@ -30,8 +30,8 @@ to setup
   ask turtles [ spread-out-vertically ]
   reset-ticks
   ;coeficiente angular tem que ser negativo... NAOOO pq to crescendo é o tick
-  set ticks-to-update-happiness 10 * happy-percent-to-stop + 25
-  ;set ticks-to-update-happiness 50 * (100 - happy-percent-to-stop) + 125
+  ;set ticks-to-update-happiness coeficient-angular-ticks-to-update * happy-percent-to-stop + 25
+  set ticks-to-update-happiness coeficient-angular-ticks-to-update * (100 - happy-percent-to-stop) + 25
 
 end
 
@@ -53,11 +53,11 @@ to go
   ]
   set ticks-count ticks-count + 1
   if (ticks-count > ticks-to-update-happiness) [
-    let t ticks-count
     set ticks-count 0
     set happy-percent-to-stop (happy-percent-to-stop - (happy-percent-to-stop * decrease-happiness-percent / 100))
-    set ticks-to-update-happiness 10 * happy-percent-to-stop + 25 ;atualiza os ticks, mas queria q fosse o contrario mas o contrario nao fica linear
+    ;set ticks-to-update-happiness coeficient-angular-ticks-to-update * happy-percent-to-stop + 25 ;atualiza os ticks, mas queria q fosse o contrario mas o contrario nao fica linear
     ;set ticks-to-update-happiness 50 * (100 - happy-percent-to-stop) + 12 ;versao que nao deu TAO certo...
+    set ticks-to-update-happiness coeficient-angular-ticks-to-update * (100 - happy-percent-to-stop) + 25
   ]
   tick
 end
@@ -405,10 +405,10 @@ ticks-to-update-happiness
 11
 
 SLIDER
-45
-475
-282
-508
+25
+455
+230
+488
 coeficient-angular-ticks-to-update
 coeficient-angular-ticks-to-update
 10
