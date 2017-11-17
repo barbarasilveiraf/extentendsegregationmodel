@@ -28,20 +28,14 @@ to setup
 end
 
 to go
-  tick
-  ;ask turtles[
-  set porcentHappyTurtle percent-turtles-happy
-  ]
+  set porcentHappyTurtle (count turtles with [happy?] / number) * 100
+
   if (porcentHappyTurtle >= happy-percent-stop)
-  ;if all? turtles [happy?]
     [ stop ]  ;; stop the simulation if everyone is happy
 
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
-
- ; ask turtles [percent-turtles-happy]
-
   find-new-groups
   update-labels
   count-boring-groups
@@ -49,15 +43,7 @@ to go
     set my-group-site patch-here
     spread-out-vertically
   ]
-
-end
-
-to-report percent-turtles-happy
-  let total count turtles-here
-  let qtdeHappy count turtles with [happy?]
-  report ((100 * qtdeHappy) / total)
-  ;let porcentHappyTurtle ((100 * qtdeHappy) / total)
-  ;if (porcentHappyTurtle >= happy-percent-stop)  [ stop ]
+  tick
 end
 
 to update-happiness  ;; turtle procedure
@@ -183,8 +169,8 @@ GRAPHICS-WINDOW
 1
 -55
 55
-1
-1
+0
+0
 1
 ticks
 30.0
@@ -249,7 +235,7 @@ tolerance
 tolerance
 0.0
 99.0
-0.0
+33.0
 1.0
 1
 %
@@ -264,7 +250,7 @@ number
 number
 0
 300
-0.0
+70.0
 1
 1
 NIL
@@ -272,9 +258,9 @@ HORIZONTAL
 
 PLOT
 10
-203
+210
 260
-368
+375
 Number Happy
 clock
 NIL
@@ -297,17 +283,17 @@ num-groups
 num-groups
 5
 20
-0.0
+7.0
 1
 1
 NIL
 HORIZONTAL
 
 MONITOR
-75
-153
-200
-198
+70
+160
+195
+205
 number happy
 count turtles with [happy?]
 3
@@ -323,7 +309,7 @@ typesTotal
 typesTotal
 2
 10
-0.0
+5.0
 1
 1
 types
@@ -331,18 +317,47 @@ HORIZONTAL
 
 SLIDER
 1120
-130
+105
 1292
-163
+138
 happy-percent-stop
 happy-percent-stop
 10
 100
-0.0
+15.0
 5
 1
 NIL
 HORIZONTAL
+
+MONITOR
+1140
+195
+1277
+240
+happy-current-percent
+porcentHappyTurtle
+17
+1
+11
+
+PLOT
+1110
+280
+1325
+430
+Happiness Percentage Growth
+clock
+NIL
+0.0
+10.0
+0.0
+15.0
+true
+false
+"set-plot-y-range 0 happy-percent-stop" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot porcentHappyTurtle"
 
 @#$#@#$#@
 ## WHAT IS IT?
