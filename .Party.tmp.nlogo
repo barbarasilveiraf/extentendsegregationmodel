@@ -157,13 +157,13 @@ end
 ; See Info tab for full copyright and license.
 @#$#@#$#@
 GRAPHICS-WINDOW
-270
-10
-1058
-553
+280
+25
+1098
+589
 -1
 -1
-4.815
+5.0
 1
 14
 1
@@ -324,10 +324,10 @@ types
 HORIZONTAL
 
 SLIDER
-1075
-65
-1252
-98
+1110
+70
+1287
+103
 decrease-happy-percent
 decrease-happy-percent
 5
@@ -339,10 +339,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-1075
-115
-1222
-160
+1110
+120
+1257
+165
 NIL
 happy-percent-to-stop
 17
@@ -350,10 +350,10 @@ happy-percent-to-stop
 11
 
 PLOT
-1070
-180
-1300
-330
+1105
+185
+1335
+335
 Decrease Percentage of Happiness
 clock
 NIL
@@ -368,10 +368,10 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot happy-percent-to-stop"
 
 SLIDER
-1075
-15
-1282
-48
+1110
+20
+1317
+53
 ticks-to-update-happiness
 ticks-to-update-happiness
 50
@@ -383,10 +383,10 @@ NIL
 HORIZONTAL
 
 PLOT
-1070
-345
-1290
-495
+1120
+365
+1320
+515
 Ticks to update happiness
 NIL
 NIL
