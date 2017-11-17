@@ -235,7 +235,7 @@ tolerance
 tolerance
 0.0
 99.0
-33.0
+30.0
 1.0
 1
 %
@@ -324,7 +324,7 @@ happy-percent-stop
 happy-percent-stop
 10
 100
-15.0
+20.0
 5
 1
 NIL
@@ -336,28 +336,28 @@ MONITOR
 1277
 240
 happy-current-percent
-(count turtles with [happy?] / number) * 100
+porcentHappyTurtle
 17
 1
 11
 
 PLOT
-1135
-285
-1335
-435
+1110
+280
+1325
+430
 Happiness Percentage Growth
 clock
 NIL
 0.0
 10.0
 0.0
-100.0
+10.0
 true
 false
-"" ""
+"set-plot-y-range 0 happy-percent-stop" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count happy-current-percent"
+"default" 1.0 0 -16777216 true "" "plot porcentHappyTurtle"
 
 @#$#@#$#@
 ## WHAT IS IT?
