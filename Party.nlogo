@@ -47,7 +47,7 @@ to go
   let mh mean-happiness
   set happy-mean ((happy-mean + mh) / 2)
   set ticks-count ticks-count + 1
-  if (ticks-count > 4000) and happy-mean < 0.5 [
+  if (ticks-count > ticks-to-update-create-groups) and happy-mean < 0.5 [
     set ticks-count 0
     set happy-mean 0
     set num-groups num-groups + 1
@@ -290,24 +290,6 @@ false
 PENS
 "Happy" 1.0 0 -10899396 true "" "plot count turtles with [happy?]"
 
-PLOT
-10
-428
-260
-598
-Single Sex Groups
-clock
-NIL
-0.0
-10.0
-0.0
-12.0
-true
-false
-"" ""
-PENS
-"Single Sex" 1.0 0 -2674135 true "" "plot boring-groups"
-
 SLIDER
 64
 37
@@ -330,17 +312,6 @@ MONITOR
 198
 number happy
 count turtles with [happy?]
-3
-1
-11
-
-MONITOR
-70
-378
-195
-423
-single sex groups
-boring-groups
 3
 1
 11
@@ -383,10 +354,10 @@ ticks-count
 11
 
 MONITOR
-1290
-85
-1372
-130
+1220
+140
+1302
+185
 NIL
 happy-mean
 17
@@ -403,6 +374,39 @@ num-groups
 17
 1
 11
+
+SLIDER
+1120
+215
+1315
+248
+ticks-to-update-create-groups
+ticks-to-update-create-groups
+100
+40000
+4000.0
+50
+1
+NIL
+HORIZONTAL
+
+PLOT
+1120
+280
+1320
+430
+Número de Grupos
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 1 -16777216 true "" "plot num-groups"
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -783,7 +787,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.1
+NetLogo 6.0.2
 @#$#@#$#@
 setup
 repeat 20 [ go ]
