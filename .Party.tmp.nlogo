@@ -30,8 +30,7 @@ to setup
   ask turtles [ spread-out-vertically ]
   reset-ticks
   ;coeficiente angular tem que ser negativo... NAOOO pq to crescendo é o tick
-  ;set ticks-to-update-happiness 10 * happy-percent-to-stop + 25
-  set ticks-to-update-happiness 50 * (100 - happy-percent-to-stop) + 25
+  set ticks-to-update-happiness 10 * (100 - happy-percent-to-stop) + 25
   ;set ticks-to-update-happiness 50 * (1 / happy-percent-to-stop) + 25
 end
 
@@ -57,7 +56,7 @@ to go
     set ticks-count 0
     set happy-percent-to-stop (happy-percent-to-stop - (happy-percent-to-stop * decrease-happiness-percent / 100))
     ;set ticks-to-update-happiness 10 * happy-percent-to-stop + 25 ;atualiza os ticks
-    set ticks-to-update-happiness 50 * (100 - happy-percent-to-stop) + 25
+    set ticks-to-update-happiness 10 * (100 - happy-percent-to-stop) + 25
 
     ;set ticks-to-update-happiness 10 * t + 25
     ;set ticks-to-update-happiness 50 * (1 / happy-percent-to-stop) + 25
