@@ -1,6 +1,8 @@
 globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
+  tick-total
+  acabou
 ]
 
 turtles-own [
@@ -11,6 +13,7 @@ turtles-own [
 
 to setup
   clear-all
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   create-turtles number [
@@ -28,7 +31,18 @@ end
 
 to go
   if all? turtles [happy?]
-    [ stop ]  ;; stop the simulation if everyone is happy
+    [
+      file-open "masterTeste.txt"
+      file-write number
+      file-write num-groups
+      file-write tolerance
+      file-write typesTotal
+      file-write tick-total
+      file-write "\n"
+      file-close
+      set acabou true
+      stop
+     ]  ;; stop the simulation if everyone is happy
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
@@ -40,6 +54,32 @@ to go
     spread-out-vertically
   ]
   tick
+  set tick-total tick-total + 1
+end
+
+to configuracaoInicial
+  set number 100
+  set num-groups 7
+  set typesTotal 9
+  set tolerance 10
+end
+
+to executar
+  let i 1
+  while [i <= 30]
+  [
+    file-open "masterTeste.txt"
+          file-write "\n"
+      file-close
+    set acabou false
+  ;  wif acabou = false [
+      setup
+      go
+   ; ]
+
+    set i i + 1
+  ]
+
 end
 
 to update-happiness  ;; turtle procedure
@@ -231,7 +271,7 @@ tolerance
 tolerance
 0.0
 99.0
-74.0
+10.0
 1.0
 1
 %
@@ -246,7 +286,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -269,24 +309,6 @@ false
 "set-plot-y-range 0 number" ""
 PENS
 "Happy" 1.0 0 -10899396 true "" "plot count turtles with [happy?]"
-
-PLOT
-10
-428
-260
-598
-Single Sex Groups
-clock
-NIL
-0.0
-10.0
-0.0
-12.0
-true
-false
-"" ""
-PENS
-"Single Sex" 1.0 0 -2674135 true "" "plot boring-groups"
 
 SLIDER
 60
@@ -314,17 +336,6 @@ count turtles with [happy?]
 1
 11
 
-MONITOR
-70
-378
-195
-423
-single sex groups
-boring-groups
-3
-1
-11
-
 SLIDER
 1115
 25
@@ -334,11 +345,28 @@ typesTotal
 typesTotal
 2
 10
-8.0
+9.0
 1
 1
 types
 HORIZONTAL
+
+BUTTON
+50
+465
+127
+498
+executar
+executar
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
