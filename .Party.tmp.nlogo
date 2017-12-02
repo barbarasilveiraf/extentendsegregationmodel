@@ -71,7 +71,7 @@ end
 to configuracaoInicial
   set number 100
   set num-groups 7
-  set typesTotal 9
+  set typesTotal
   set tolerance 10
 end
 
