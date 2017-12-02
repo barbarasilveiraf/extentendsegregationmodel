@@ -3,7 +3,9 @@ globals [
   boring-groups  ;; how many groups are currently single-sex
   tick-total
   acabou
+  execCount
 ]
+
 
 turtles-own [
   happy?         ;; true or false
@@ -11,8 +13,11 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+
+to setup-loop
+  let b execCount
   clear-all
+  set execCount b
   configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
@@ -29,20 +34,26 @@ to setup
   reset-ticks
 end
 
+to setup
+  set execCount 0
+  setup-loop
+end
+
 to go
-  if all? turtles [happy?]
+  if all? turtles [happy?] or ticks > 5000
     [
       file-open "masterTeste.txt"
       file-write number
       file-write num-groups
       file-write tolerance
       file-write typesTotal
-      file-write tick-total
-      file-write "\n"
+      file-print tick-total
       file-close
-      set acabou true
-      stop
-     ]  ;; stop the simulation if everyone is happy
+      set execCount execCount + 1
+     if-else execCount > 30
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
@@ -60,27 +71,10 @@ end
 to configuracaoInicial
   set number 100
   set num-groups 7
-  set typesTotal 9
+  set typesTotal 5
   set tolerance 10
 end
 
-to executar
-  let i 1
-  while [i <= 30]
-  [
-    file-open "masterTeste.txt"
-          file-write "\n"
-      file-close
-    set acabou false
-     while [acabou = false] [
-      setup
-      go
-    ]
-
-    set i i + 1
-  ]
-
-end
 
 to update-happiness  ;; turtle procedure
   let total count turtles-here
@@ -271,7 +265,7 @@ tolerance
 tolerance
 0.0
 99.0
-10.0
+70.0
 1.0
 1
 %
@@ -345,28 +339,22 @@ typesTotal
 typesTotal
 2
 10
-9.0
+3.0
 1
 1
 types
 HORIZONTAL
 
-BUTTON
-50
-465
-127
-498
-executar
-executar
+MONITOR
+1135
+110
+1207
+155
 NIL
+execCount
+17
 1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
