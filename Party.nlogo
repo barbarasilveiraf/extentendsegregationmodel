@@ -2,6 +2,10 @@ globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
+  execCount
+  tick-total
+  qtdeToleranciaAumentou
+  toleranceInicial
 ]
 
 turtles-own [
@@ -10,8 +14,12 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+to setup-loop
+  let b execCount
   clear-all
+  set execCount b
+  set qtdeToleranciaAumentou 0
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   create-turtles number [
@@ -25,12 +33,40 @@ to setup
   update-labels
   ask turtles [ spread-out-vertically ]
   reset-ticks
-
 end
 
+to setup
+  set execCount 0
+  setup-loop
+end
+
+
 to go
-  if all? turtles [happy?]
-    [ stop ]  ;; stop the simulation if everyone is happy
+  if all? turtles [happy?] or ticks > 50000
+    [
+      file-open "mod02_Config1.txt"
+      file-write number
+      file-write ";"
+      file-write num-groups
+      file-write ";"
+      file-write toleranceInicial
+      file-write ";"
+      file-write typesTotal
+      file-write ";"
+      file-print tick-total
+      file-write ";"
+      file-write tolerance
+      file-write ";"
+      file-print ticks-to-update-tolerance
+      file-write ";"
+      file-print qtdeToleranciaAumentou
+      file-write ";"
+      file-close
+      set execCount execCount + 1
+     if-else execCount > 30
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
@@ -45,9 +81,21 @@ to go
   if (ticks-count > ticks-to-update-tolerance) [
     set ticks-count 0
     set tolerance tolerance * (1 + (increase-tolerance-percent / 100))
+    set qtdeToleranciaAumentou  qtdeToleranciaAumentou + 1
     ;;set tolerance tolerance * 1.05
   ]
+  set tick-total tick-total + 1
   tick
+end
+
+to configuracaoInicial
+  set number 100
+  set num-groups 5
+  set typesTotal 7
+  set tolerance 20
+  set toleranceInicial tolerance
+  set increase-tolerance-percent 5
+  set ticks-to-update-tolerance 500
 end
 
 to update-happiness  ;; turtle procedure
@@ -239,7 +287,7 @@ tolerance
 tolerance
 0.0
 99.0
-60.81406942770463
+25.525631250000004
 1.0
 1
 %
@@ -254,7 +302,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -287,7 +335,7 @@ num-groups
 num-groups
 5
 20
-7.0
+5.0
 1
 1
 NIL
@@ -313,7 +361,7 @@ typesTotal
 typesTotal
 2
 10
-8.0
+7.0
 1
 1
 types
@@ -375,7 +423,7 @@ ticks-to-update-tolerance
 ticks-to-update-tolerance
 50
 3000
-150.0
+500.0
 100
 1
 NIL
@@ -395,6 +443,17 @@ increase-tolerance-percent
 1
 NIL
 HORIZONTAL
+
+MONITOR
+75
+475
+147
+520
+NIL
+execCount
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
