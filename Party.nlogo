@@ -3,6 +3,11 @@ globals [
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
   ticks-to-update-tolerance
+  execCount
+  tick-total
+  qtdeToleranciaAumentou
+  toleranceInicial
+  ticksInicial
 ]
 
 turtles-own [
@@ -11,8 +16,12 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+to setup-loop
+  let b execCount
   clear-all
+  set execCount b
+  set qtdeToleranciaAumentou 0
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   create-turtles number [
@@ -26,14 +35,46 @@ to setup
   update-labels
   ask turtles [ spread-out-vertically ]
   reset-ticks
-  ;;set ticks-to-update-tolerance 49.5 * tolerance + 25
-  set ticks-to-update-tolerance coeficient-angular-ticks-to-update * tolerance + 25
-
+  set ticks-to-update-tolerance coeficient-angular-ticks-to-update * tolerance + 20
+  set ticksInicial ticks-to-update-tolerance
 end
 
+to setup
+  set execCount 0
+  setup-loop
+end
+
+
 to go
-  if all? turtles [happy?]
-    [ stop ]  ;; stop the simulation if everyone is happy
+  if all? turtles [happy?] or ticks > 50000
+    [
+      file-open "mod02_Config1.txt"
+      file-write number
+      file-write ";"
+      file-write num-groups
+      file-write ";"
+      file-write toleranceInicial
+      file-write ";"
+      file-write ticksInicial
+      file-write ";"
+      file-write typesTotal
+      file-write ";"
+      file-print tick-total
+      file-write ";"
+      file-write tolerance
+      file-write ";"
+      file-print ticks-to-update-tolerance
+      file-write ";"
+      file-print qtdeToleranciaAumentou
+      file-write ";"
+      file-print coeficient-angular-ticks-to-update
+      file-write ";"
+      file-close
+      set execCount execCount + 1
+     if-else execCount > 30
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
@@ -50,9 +91,20 @@ to go
     set ticks-count 0
     set tolerance tolerance * (1 + (increase-tolerance-percent / 100))
     ;;set ticks-to-update-tolerance 49.5 * tolerance + 25
-    set ticks-to-update-tolerance coeficient-angular-ticks-to-update * tolerance + 25
+    set ticks-to-update-tolerance coeficient-angular-ticks-to-update * tolerance + 20
   ]
+  set tick-total tick-total + 1
   tick
+end
+
+to configuracaoInicial
+  set number 100
+  set tolerance 20
+  set typesTotal 7
+  set num-groups 5
+  set toleranceInicial tolerance
+  set increase-tolerance-percent 5
+  set coeficient-angular-ticks-to-update 24
 end
 
 to-report amount-happiness
@@ -250,7 +302,7 @@ tolerance
 tolerance
 0.0
 99.0
-93.0
+20.0
 1.0
 1
 %
@@ -265,7 +317,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -298,7 +350,7 @@ num-groups
 num-groups
 5
 20
-6.0
+5.0
 1
 1
 NIL
@@ -324,7 +376,7 @@ typesTotal
 typesTotal
 2
 10
-9.0
+7.0
 1
 1
 types
@@ -412,7 +464,7 @@ coeficient-angular-ticks-to-update
 coeficient-angular-ticks-to-update
 10
 100
-49.5
+24.0
 0.5
 1
 NIL
