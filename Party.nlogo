@@ -3,6 +3,10 @@ globals [
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
   tolerance
+  execCount
+  tick-total
+  qtdeToleranciaAumentou
+  toleranceInicial
 ]
 
 turtles-own [
@@ -11,8 +15,12 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+to setup-loop
+  let b execCount
   clear-all
+  set execCount b
+  set qtdeToleranciaAumentou 0
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   create-turtles number [
@@ -29,9 +37,33 @@ to setup
   set tolerance logistic 0
 end
 
+to setup
+  set execCount 0
+  setup-loop
+end
+
 to go
-  if all? turtles [happy?]
-    [ stop ]  ;; stop the simulation if everyone is happy
+  if all? turtles [happy?] ;;or ticks > 50000
+    [
+      file-open "mod04_Config1.txt"
+      file-write number
+      file-write ";"
+      file-write num-groups
+      file-write ";"
+      file-write toleranceInicial
+      file-write ";"
+      file-write typesTotal
+      file-write ";"
+      file-print tick-total
+      file-write ";"
+      file-write tolerance
+      file-write ";"
+      file-close
+      set execCount execCount + 1
+     if-else execCount > 30
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
@@ -50,6 +82,7 @@ to go
   ;;  set max-ticks 49.5 * tolerance + 25
   ;;]
   set tolerance logistic ticks-count
+  set tick-total tick-total + 1
   tick
 end
 
@@ -59,6 +92,13 @@ to-report logistic [x]
   ;let l 1 / (1 + exp(-0.00555 * (x - 40000) ) )
   ;let l 1 / (1 + 11 * (exp(- 0.0009 * (x - 1000 )) ))
   report l * 100
+end
+
+to configuracaoInicial
+  set number 100
+  set typesTotal 7
+  set num-groups 5
+  set toleranceInicial tolerance
 end
 
 to-report amount-happiness
@@ -256,7 +296,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -289,7 +329,7 @@ num-groups
 num-groups
 5
 20
-6.0
+5.0
 1
 1
 NIL
@@ -315,7 +355,7 @@ typesTotal
 typesTotal
 2
 10
-9.0
+7.0
 1
 1
 types
@@ -349,6 +389,17 @@ false
 "set-plot-y-range 0 100" ""
 PENS
 "Tolerance" 1.0 0 -16777216 true "" "plotxy ticks tolerance"
+
+MONITOR
+1140
+335
+1212
+380
+NIL
+execCount
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
