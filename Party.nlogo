@@ -92,6 +92,7 @@ to go
     set tolerance tolerance * (1 + (increase-tolerance-percent / 100))
     ;;set ticks-to-update-tolerance 49.5 * tolerance + 25
     set ticks-to-update-tolerance coeficient-angular-ticks-to-update * tolerance + 20
+    set qtdeToleranciaAumentou qtdeToleranciaAumentou + 1
   ]
   set tick-total tick-total + 1
   tick
@@ -469,6 +470,17 @@ coeficient-angular-ticks-to-update
 1
 NIL
 HORIZONTAL
+
+MONITOR
+1145
+480
+1217
+525
+NIL
+execCount
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
