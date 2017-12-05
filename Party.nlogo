@@ -2,6 +2,8 @@ globals [
   group-sites    ;; agentset of patches where groups are located
   boring-groups  ;; how many groups are currently single-sex
   porcentHappyTurtle
+  execCount
+  tick-total
 ]
 
 turtles-own [
@@ -10,8 +12,11 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+to setup-loop
+  let b execCount
   clear-all
+  set execCount b
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   create-turtles number [
@@ -27,11 +32,39 @@ to setup
   reset-ticks
 end
 
+to setup
+  set execCount 0
+  setup-loop
+end
+
+to configuracaoInicial
+  ;set number 100
+  ;set tolerance 20
+  ;set typesTotal 7
+  ;set num-groups 5
+
+end
+
 to go
   set porcentHappyTurtle (count turtles with [happy?] / number) * 100
 
-  if (porcentHappyTurtle >= happy-percent-stop)
-    [ stop ]  ;; stop the simulation if everyone is happy
+  if (porcentHappyTurtle >= happy-percent-stop) or ticks > 50000
+  [
+      file-open "mod02_Config1.txt"
+      file-print ("nomeConfig")
+      file-print number
+      file-print num-groups
+      file-print typesTotal
+      file-print tolerance
+      file-print happy-percent-stop
+      file-print tick-total
+      file-print count turtles with [happy?]
+      file-close
+      set execCount execCount + 1
+     if-else execCount > 3
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
 
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
@@ -43,6 +76,7 @@ to go
     set my-group-site patch-here
     spread-out-vertically
   ]
+  set tick-total tick-total + 1
   tick
 end
 
@@ -235,7 +269,7 @@ tolerance
 tolerance
 0.0
 99.0
-33.0
+42.0
 1.0
 1
 %
@@ -250,7 +284,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -283,7 +317,7 @@ num-groups
 num-groups
 5
 20
-7.0
+5.0
 1
 1
 NIL
@@ -309,7 +343,7 @@ typesTotal
 typesTotal
 2
 10
-5.0
+7.0
 1
 1
 types
@@ -322,9 +356,9 @@ SLIDER
 138
 happy-percent-stop
 happy-percent-stop
-10
+5
 100
-15.0
+40.0
 5
 1
 NIL
@@ -341,10 +375,21 @@ happy-current-percent
 1
 11
 
+MONITOR
+115
+450
+187
+495
+NIL
+execCount
+17
+1
+11
+
 PLOT
-1135
+1125
 285
-1335
+1325
 435
 Happiness Percentage Growth
 clock
@@ -357,7 +402,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count happy-current-percent"
+"default" 1.0 0 -16777216 true "" "plot count happy-percent-stop"
 
 @#$#@#$#@
 ## WHAT IS IT?
