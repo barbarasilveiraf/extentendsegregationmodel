@@ -43,7 +43,7 @@ end
 
 to setup
   set execCount 0
-  set cabecalho "numeroIndividuos;numeroGrupos;numerotsTipos;tolerancia;Porcent-DecaiFelicidade;ticks-to-update;felicidadeInicio;Porcent-FelicidadeExigidaParar;Media-Porcent-FelicidadeExigidaParar;DP-Porcent-FelicidadeExigidaParar;ticksTotal;media-ticksTotal;dp-ticksTotal;qtdeIndividuosFelizes;media-qtdeIndividuosFelizes;dp-qtdeIndividuosFelizes;qtdeVezesDiminuiuAumentou;media-qtdeVezesDiminuiuAumentou;dp-qtdeVezesDiminuiuAumentou;"
+  set cabecalho "config;numeroIndividuos;numeroGrupos;numerotsTipos;tolerancia;Porcent-DecaiFelicidade;ticks-to-update;felicidadeInicio;porcent-FelicidadeExigidaParar;media-Porcent-FelicidadeExigidaParar;dp-Porcent-FelicidadeExigidaParar;ticksTotal;media-ticksTotal;dp-ticksTotal;qtdeIndividuosFelizes;media-qtdeIndividuosFelizes;dp-qtdeIndividuosFelizes;qtdeVezesDiminuiuFelicidade;media-qtdeVezesDiminuiuFelicidade;dp-qtdeVezesDiminuiuFelicidade;"
   setup-loop
 end
 
@@ -299,7 +299,7 @@ tolerance
 tolerance
 0.0
 99.0
-7.0
+20.0
 1.0
 1
 %
@@ -314,7 +314,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -347,7 +347,7 @@ num-groups
 num-groups
 5
 20
-7.0
+5.0
 1
 1
 NIL
@@ -373,7 +373,7 @@ typesTotal
 typesTotal
 2
 10
-5.0
+7.0
 1
 1
 types
@@ -432,7 +432,7 @@ ticks-to-update-happiness
 ticks-to-update-happiness
 50
 30000
-50.0
+500.0
 50
 1
 NIL
