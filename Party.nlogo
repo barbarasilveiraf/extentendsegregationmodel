@@ -5,6 +5,11 @@ globals [
   happy-percent-to-stop
   ticks-count
   ticks-to-update-happiness
+  execCount
+  tick-total
+  cabecalho
+  qtdeVezesDiminuiu
+  happy-percent-to-stop-inicio
 ]
 
 turtles-own [
@@ -13,11 +18,18 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+to setup-loop
+  let b execCount
+  let c cabecalho
   clear-all
+  set cabecalho c
+  set execCount b
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   set happy-percent-to-stop 100
+  set qtdeVezesDiminuiu 0
+  set happy-percent-to-stop-inicio 100
   create-turtles number [
     choose-type typesTotal       ;; become someting
     set size 3                   ;; be easier to see
@@ -28,18 +40,63 @@ to setup
   count-boring-groups
   update-labels
   ask turtles [ spread-out-vertically ]
-  reset-ticks
   ;coeficiente angular tem que ser negativo... NAOOO pq to crescendo é o tick
-  set ticks-to-update-happiness coeficient-angular-ticks-to-update * happy-percent-to-stop + 25
+  set ticks-to-update-happiness coeficient-angular-ticks-to-update * happy-percent-to-stop + 0
   ;set ticks-to-update-happiness 50 * (100 - happy-percent-to-stop) + 125
+  reset-ticks
+end
 
+to setup
+  set execCount 0
+  set cabecalho "config;numeroIndividuos;numeroGrupos;numerotsTipos;tolerancia;Porcent-DecaiFelicidade;ticks-to-update;felicidadeInicio;porcent-FelicidadeExigidaParar;media-Porcent-FelicidadeExigidaParar;dp-Porcent-FelicidadeExigidaParar;ticksTotal;media-ticksTotal;dp-ticksTotal;qtdeIndividuosFelizes;media-qtdeIndividuosFelizes;dp-qtdeIndividuosFelizes;qtdeVezesDiminuiuFelicidade;media-qtdeVezesDiminuiuFelicidade;dp-qtdeVezesDiminuiuFelicidade;coeficienteAngular;"
+  setup-loop
+end
+
+to configuracaoInicial
+  set number 100
+  set tolerance 20
+  set typesTotal 7
+  set num-groups 5
+  set decrease-happiness-percent 5
+  set coeficient-angular-ticks-to-update 5
 end
 
 to go
   set porcentHappyTurtle (count turtles with [happy?] / number) * 100
 
   if (porcentHappyTurtle >= happy-percent-to-stop)
-    [ stop ]  ;; stop the simulation if everyone is happy
+  [
+      file-open "mod07Config1.txt"
+      file-print cabecalho
+      file-print ("mod_07_tip7_gru5_tol_20_feliDecai_5")
+      file-print number
+      file-print num-groups
+      file-print typesTotal
+      file-print tolerance
+      file-print decrease-happiness-percent
+      file-print ticks-to-update-happiness
+      file-print happy-percent-to-stop-inicio
+      file-print happy-percent-to-stop
+      file-print "" ;media felicidade para parar
+      file-print "" ;dp felicidade para parar
+      file-print tick-total
+      file-print "" ;mediaTicks
+      file-print "" ;dpTicks
+      file-print count turtles with [happy?]
+      file-print "" ;mediaTicks qtdeIndividuosFelizes
+      file-print "" ;dpTicks qtdeIndividuosFelizes
+      file-print qtdeVezesDiminuiu
+      file-print "" ;media qtdeVezesDiminuiu
+      file-print "" ;dp qtdeVezesDiminuiu
+      file-print qtdeVezesDiminuiu
+      file-print coeficient-angular-ticks-to-update
+      file-close
+      set execCount execCount + 1
+     if-else execCount > 30
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
+
 
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
@@ -55,10 +112,12 @@ to go
   if (ticks-count > ticks-to-update-happiness) [
     let t ticks-count
     set ticks-count 0
+    set qtdeVezesDiminuiu qtdeVezesDiminuiu + 1
     set happy-percent-to-stop (happy-percent-to-stop - (happy-percent-to-stop * decrease-happiness-percent / 100))
-    set ticks-to-update-happiness coeficient-angular-ticks-to-update * happy-percent-to-stop + 25 ;atualiza os ticks, mas queria q fosse o contrario mas o contrario nao fica linear
+    set ticks-to-update-happiness coeficient-angular-ticks-to-update * happy-percent-to-stop + 0 ;atualiza os ticks, mas queria q fosse o contrario mas o contrario nao fica linear
     ;set ticks-to-update-happiness 50 * (100 - happy-percent-to-stop) + 12 ;versao que nao deu TAO certo...
   ]
+  set tick-total tick-total + 1
   tick
 end
 
@@ -251,7 +310,7 @@ tolerance
 tolerance
 0.0
 99.0
-7.0
+33.0
 1.0
 1
 %
@@ -411,10 +470,10 @@ SLIDER
 488
 coeficient-angular-ticks-to-update
 coeficient-angular-ticks-to-update
-10
+5
 100
-100.0
-10
+5.0
+5
 1
 NIL
 HORIZONTAL
