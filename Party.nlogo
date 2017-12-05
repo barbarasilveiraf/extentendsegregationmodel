@@ -4,6 +4,11 @@ globals [
   porcentHappyTurtle
   happy-percent-to-stop
   ticks-count
+  execCount
+  tick-total
+  cabecalho
+  qtdeVezesDiminuiu
+  happy-percent-to-stop-inicio
 ]
 
 turtles-own [
@@ -12,11 +17,17 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+to setup-loop
+  let b execCount
+  let c cabecalho
   clear-all
+  set cabecalho c
+  set execCount b
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   set happy-percent-to-stop 100
+  set happy-percent-to-stop-inicio 100
   create-turtles number [
     choose-type typesTotal       ;; become someting
     set size 3                   ;; be easier to see
@@ -30,11 +41,54 @@ to setup
   reset-ticks
 end
 
+to setup
+  set execCount 0
+  set cabecalho "numeroIndividuos;numeroGrupos;numerotsTipos;tolerancia;Porcent-DecaiFelicidade;ticks-to-update;felicidadeInicio;Porcent-FelicidadeExigidaParar;Media-Porcent-FelicidadeExigidaParar;DP-Porcent-FelicidadeExigidaParar;ticksTotal;media-ticksTotal;dp-ticksTotal;qtdeIndividuosFelizes;media-qtdeIndividuosFelizes;dp-qtdeIndividuosFelizes;qtdeVezesDiminuiuAumentou;media-qtdeVezesDiminuiuAumentou;dp-qtdeVezesDiminuiuAumentou;"
+  setup-loop
+end
+
+to configuracaoInicial
+  set number 100
+  set tolerance 20
+  set typesTotal 7
+  set num-groups 5
+  set decrease-happy-percent 5
+  set ticks-to-update-happiness 500
+end
+
 to go
   set porcentHappyTurtle (count turtles with [happy?] / number) * 100
 
   if (porcentHappyTurtle >= happy-percent-to-stop)
-    [ stop ]  ;; stop the simulation if everyone is happy
+  [
+      file-open "mod06Config1.txt"
+      file-print cabecalho
+      file-print ("mod_05_tip7_gru5_tol_20_feliDecai_5")
+      file-print number
+      file-print num-groups
+      file-print typesTotal
+      file-print tolerance
+      file-print decrease-happy-percent
+      file-print ticks-to-update-happiness
+      file-print happy-percent-to-stop-inicio
+      file-print happy-percent-to-stop
+      file-print "" ;media felicidade para parar
+      file-print "" ;dp felicidade para parar
+      file-print tick-total
+      file-print "" ;mediaTicks
+      file-print "" ;dpTicks
+      file-print count turtles with [happy?]
+      file-print "" ;mediaTicks qtdeIndividuosFelizes
+      file-print "" ;dpTicks qtdeIndividuosFelizes
+      file-print qtdeVezesDiminuiu
+      file-print "" ;media qtdeVezesDiminuiu
+      file-print "" ;dp qtdeVezesDiminuiu
+      file-close
+      set execCount execCount + 1
+     if-else execCount > 30
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
 
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
@@ -49,8 +103,10 @@ to go
   set ticks-count ticks-count + 1
   if (ticks-count > ticks-to-update-happiness) [
     set ticks-count 0
+    set qtdeVezesDiminuiu qtdeVezesDiminuiu + 1
     set happy-percent-to-stop (happy-percent-to-stop - (happy-percent-to-stop * decrease-happy-percent / 100))
   ]
+  set tick-total tick-total + 1
   tick
 end
 
@@ -399,6 +455,17 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot ticks-to-update-happiness"
+
+MONITOR
+75
+445
+147
+490
+NIL
+execCount
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
