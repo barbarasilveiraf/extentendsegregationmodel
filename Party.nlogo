@@ -24,6 +24,7 @@ to setup-loop
   clear-all
   set cabecalho c
   set execCount b
+  set qtdeVezesDiminuiu 0
   configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
