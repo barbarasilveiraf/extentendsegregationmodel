@@ -10,6 +10,7 @@ globals [
   cabecalho
   qtdeVezesDiminuiu
   happy-percent-to-stop-inicio
+  ticks-to-update-happiness-inicio
 ]
 
 turtles-own [
@@ -44,12 +45,13 @@ to setup-loop
   ;coeficiente angular tem que ser negativo... NAOOO pq to crescendo é o tick
   set ticks-to-update-happiness coeficient-angular-ticks-to-update * happy-percent-to-stop + 0
   ;set ticks-to-update-happiness 50 * (100 - happy-percent-to-stop) + 125
+  set ticks-to-update-happiness-inicio ticks-to-update-happiness
   reset-ticks
 end
 
 to setup
   set execCount 0
-  set cabecalho "config;numeroIndividuos;numeroGrupos;numerotsTipos;tolerancia;Porcent-DecaiFelicidade;ticks-to-update;felicidadeInicio;porcent-FelicidadeExigidaParar;media-Porcent-FelicidadeExigidaParar;dp-Porcent-FelicidadeExigidaParar;ticksTotal;media-ticksTotal;dp-ticksTotal;qtdeIndividuosFelizes;media-qtdeIndividuosFelizes;dp-qtdeIndividuosFelizes;qtdeVezesDiminuiuFelicidade;media-qtdeVezesDiminuiuFelicidade;dp-qtdeVezesDiminuiuFelicidade;coeficienteAngular;"
+  set cabecalho "config;numeroIndividuos;numeroGrupos;numerotsTipos;tolerancia;Porcent-DecaiFelicidade;ticks-to-update-inicio;media-ticks-to-update-inicio;dp-ticks-to-update-inicio;felicidadeInicio;ticks-to-update-final;media-ticks-to-update-final;dp-ticks-to-update-final;porcent-FelicidadeExigidaParar;media-Porcent-FelicidadeExigidaParar;dp-Porcent-FelicidadeExigidaParar;ticksTotal;media-ticksTotal;dp-ticksTotal;qtdeIndividuosFelizes;media-qtdeIndividuosFelizes;dp-qtdeIndividuosFelizes;qtdeVezesDiminuiuFelicidade;media-qtdeVezesDiminuiuFelicidade;dp-qtdeVezesDiminuiuFelicidade;coeficienteAngular;"
   setup-loop
 end
 
@@ -75,8 +77,13 @@ to go
       file-print typesTotal
       file-print tolerance
       file-print decrease-happiness-percent
-      file-print ticks-to-update-happiness
+      file-print ticks-to-update-happiness-inicio
+      file-print "" ;media ticks-to-update-happiness-inicio
+      file-print "" ;dp ticks-to-update-happiness-inicio
       file-print happy-percent-to-stop-inicio
+      file-print ticks-to-update-happiness ;final
+      file-print "" ;media ticks-to-update-happiness-final
+      file-print "" ;dp ticks-to-update-happiness-final
       file-print happy-percent-to-stop
       file-print "" ;media felicidade para parar
       file-print "" ;dp felicidade para parar
@@ -89,7 +96,6 @@ to go
       file-print qtdeVezesDiminuiu
       file-print "" ;media qtdeVezesDiminuiu
       file-print "" ;dp qtdeVezesDiminuiu
-      file-print qtdeVezesDiminuiu
       file-print coeficient-angular-ticks-to-update
       file-close
       set execCount execCount + 1
@@ -311,7 +317,7 @@ tolerance
 tolerance
 0.0
 99.0
-33.0
+20.0
 1.0
 1
 %
@@ -326,7 +332,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -359,7 +365,7 @@ num-groups
 num-groups
 5
 20
-7.0
+5.0
 1
 1
 NIL
@@ -385,7 +391,7 @@ typesTotal
 typesTotal
 2
 10
-5.0
+7.0
 1
 1
 types
@@ -407,9 +413,9 @@ NIL
 HORIZONTAL
 
 MONITOR
-1100
+1065
 120
-1247
+1220
 165
 NIL
 happy-percent-to-stop
@@ -418,10 +424,10 @@ happy-percent-to-stop
 11
 
 PLOT
-1070
-180
-1300
-330
+1065
+175
+1295
+325
 Decrease Percentage of Happiness
 clock
 NIL
@@ -454,9 +460,9 @@ PENS
 "default" 1.0 0 -16777216 true "" "plot ticks-to-update-happiness"
 
 MONITOR
-1095
+1065
 70
-1252
+1220
 115
 NIL
 ticks-to-update-happiness
@@ -473,11 +479,22 @@ coeficient-angular-ticks-to-update
 coeficient-angular-ticks-to-update
 5
 100
-5.0
+15.0
 5
 1
 NIL
 HORIZONTAL
+
+MONITOR
+1235
+85
+1307
+130
+NIL
+execCount
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
