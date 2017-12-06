@@ -3,6 +3,11 @@ globals [
   boring-groups  ;; how many groups are currently single-sex
   ticks-count    ;; ticks amount since last gruops expansion
   happy-mean     ;; mean of happiness since last groups expansion
+  qtdeVezesAumentou
+  qtdeGruposInicio
+  execCount
+  tick-total
+  cabecalho
 ]
 
 turtles-own [
@@ -11,8 +16,13 @@ turtles-own [
   my-type        ;; type of turtles
 ]
 
-to setup
+to setup-loop
+  let b execCount
+  let c cabecalho
   clear-all
+  set cabecalho c
+  set execCount b
+  configuracaoInicial
   set group-sites patches with [group-site?]
   set-default-shape turtles "person"
   create-turtles number [
@@ -27,12 +37,50 @@ to setup
   ask turtles [ spread-out-vertically ]
   set ticks-count 0
   set happy-mean 0
+  set qtdeGruposInicio num-groups
   reset-ticks
+end
+
+to setup
+  set execCount 0
+  set cabecalho ""
+  setup-loop
+end
+
+to configuracaoInicial
+  ;set number 100
+  ;set tolerance 40
+  ;set typesTotal 7
+  ;set num-groups 5
+  set ticks-to-update-create-groups 4000
 end
 
 to go
   if all? turtles [happy?]
-    [ stop ]  ;; stop the simulation if everyone is happy
+      [
+      file-open "mod09Config1.txt"
+      file-print cabecalho
+      file-print ("mod_09_tip7_gru5_tol_20_feliDecai_5")
+      file-print number
+      file-print qtdeGruposInicio
+      file-print typesTotal
+      file-print tolerance
+      file-print ticks-to-update-create-groups
+      file-print tick-total
+      file-print "" ;mediaTicks
+      file-print "" ;dpTicks
+      file-print num-groups
+      file-print "" ;media num-groups
+      file-print "" ;dp-num-groups
+      file-print qtdeVezesAumentou
+      file-print "" ;mediaqtdeVezesAumentouu
+      file-print "" ;dpqtdeVezesAumentouu
+      file-close
+      set execCount execCount + 1
+     if-else execCount > 0
+      [stop]
+      [setup-loop]
+  ]  ;; stop the simulation if everyone is happy
   ask turtles [ move-to my-group-site ]  ;; put all people back to their group sites
   ask turtles [ update-happiness ]
   ask turtles [ leave-if-unhappy ]
@@ -50,6 +98,7 @@ to go
   if (ticks-count > ticks-to-update-create-groups) and happy-mean < 0.5 [
     set ticks-count 0
     set happy-mean 0
+    set qtdeVezesAumentou qtdeVezesAumentou + 1
     set num-groups num-groups + 1
     set group-sites patches with [group-site?]
   ]
@@ -266,7 +315,7 @@ number
 number
 0
 300
-60.0
+100.0
 1
 1
 NIL
@@ -299,7 +348,7 @@ num-groups
 num-groups
 5
 20
-8.0
+7.0
 1
 1
 NIL
@@ -325,7 +374,7 @@ typesTotal
 typesTotal
 2
 10
-6.0
+7.0
 1
 1
 types
@@ -383,8 +432,8 @@ SLIDER
 ticks-to-update-create-groups
 ticks-to-update-create-groups
 100
-40000
-4000.0
+4000
+5000.0
 50
 1
 NIL
@@ -407,6 +456,17 @@ false
 "" ""
 PENS
 "default" 1.0 1 -16777216 true "" "plot num-groups"
+
+MONITOR
+70
+395
+142
+440
+NIL
+execCount
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
