@@ -59,13 +59,13 @@ to configuracaoInicial
   set typesTotal 7
   set num-groups 5
   set decrease-happiness-percent 5
-  set coeficient-angular-ticks-to-update 5
+  set coeficient-angular-ticks-to-update 45
 end
 
 to go
   set porcentHappyTurtle (count turtles with [happy?] / number) * 100
 
-  if (porcentHappyTurtle >= happy-percent-to-stop)
+  if (porcentHappyTurtle >= happy-percent-to-stop) or happy-percent-to-stop < 0.1
   [
       file-open "mod08Config1.txt"
       file-print cabecalho
@@ -315,7 +315,7 @@ tolerance
 tolerance
 0.0
 99.0
-43.0
+20.0
 1.0
 1
 %
@@ -330,7 +330,7 @@ number
 number
 0
 300
-70.0
+100.0
 1
 1
 NIL
@@ -363,7 +363,7 @@ num-groups
 num-groups
 5
 20
-7.0
+5.0
 1
 1
 NIL
@@ -389,7 +389,7 @@ typesTotal
 typesTotal
 2
 10
-5.0
+7.0
 1
 1
 types
@@ -477,7 +477,7 @@ coeficient-angular-ticks-to-update
 coeficient-angular-ticks-to-update
 5
 200
-145.0
+35.0
 5
 1
 NIL
