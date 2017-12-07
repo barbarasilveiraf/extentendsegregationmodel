@@ -52,7 +52,7 @@ to configuracaoInicial
   ;set tolerance 40
   ;set typesTotal 7
   ;set num-groups 5
-  set ticks-to-update-create-groups 1000
+  set ticks-to-update-create-groups 10000
 end
 
 to go
@@ -105,7 +105,6 @@ to go
       set my-group-site one-of group-sites
       move-to my-group-site
     ]
-    find-new-groups
   ]
   set tick-total tick-total + 1
   tick
@@ -306,7 +305,7 @@ tolerance
 tolerance
 0.0
 99.0
-20.0
+30.0
 1.0
 1
 %
@@ -354,7 +353,7 @@ num-groups
 num-groups
 5
 20
-53.0
+25.0
 1
 1
 NIL
@@ -439,7 +438,7 @@ ticks-to-update-create-groups
 ticks-to-update-create-groups
 100
 4000
-1000.0
+4000.0
 50
 1
 NIL
