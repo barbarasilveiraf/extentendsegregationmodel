@@ -52,7 +52,7 @@ to configuracaoInicial
   ;set tolerance 40
   ;set typesTotal 7
   ;set num-groups 5
-  set ticks-to-update-create-groups 4000
+  set ticks-to-update-create-groups 1000
 end
 
 to go
@@ -101,7 +101,13 @@ to go
     set qtdeVezesAumentou qtdeVezesAumentou + 1
     set num-groups num-groups + 1
     set group-sites patches with [group-site?]
+    ask turtles [
+      set my-group-site one-of group-sites
+      move-to my-group-site
+    ]
+    find-new-groups
   ]
+  set tick-total tick-total + 1
   tick
 end
 
@@ -131,7 +137,7 @@ to find-new-groups
   display   ;; force display update so we see animation
   let malcontents turtles with [not member? patch-here group-sites]
   if not any? malcontents [ stop ]
-  ask malcontents [ fd 1 ]
+  ask malcontents [ fd 1]
   find-new-groups
 end
 
@@ -300,7 +306,7 @@ tolerance
 tolerance
 0.0
 99.0
-40.0
+20.0
 1.0
 1
 %
@@ -348,7 +354,7 @@ num-groups
 num-groups
 5
 20
-7.0
+53.0
 1
 1
 NIL
@@ -433,7 +439,7 @@ ticks-to-update-create-groups
 ticks-to-update-create-groups
 100
 4000
-5000.0
+1000.0
 50
 1
 NIL
